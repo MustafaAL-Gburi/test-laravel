@@ -13,89 +13,164 @@
 
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/custom.css">
+
+
     <style>
-        /* Dialog overlay */
+        /* ===== TABLE DARK STYLE ===== */
+
+        #data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #2b2b2b;
+            color: #ddd;
+        }
+
+        /* Header */
+        #data-table thead {
+            background: #1f1f1f;
+        }
+
+        #data-table th {
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+            color: #aaa;
+            border-bottom: 1px solid #444;
+        }
+
+        /* Rows */
+        #data-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        /* Zebra rows */
+        #data-table tbody tr:nth-child(even) {
+            background: #2f2f2f;
+        }
+
+        /* Hover */
+        #data-table tbody tr:hover {
+            background: #3a3a3a;
+        }
+
+        /* Actions icons */
+        #data-table .actions a {
+            color: #bbb;
+            margin-right: 8px;
+            text-decoration: none;
+        }
+
+        #data-table .actions a:hover {
+            color: #fff;
+        }
+
+        /* Delete icon */
+        .icon-danger {
+            color: #ff4d4d !important;
+        }
+
+        .icon-danger:hover {
+            color: #ff1a1a !important;
+        }
+
+        /* Overlay */
         .dialog-overlay {
-            position: fixed !important;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 9998;
         }
 
-        /* Dialog box */
+        /* Modal */
         .dialog {
-            position: fixed !important;
-            background: white;
-            min-width: 300px;
-            max-width: 600px;
-            padding: 20px;
-            border-radius: 10px;
+            position: fixed;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+            background: #1e1e1e;
+            color: #ddd;
+            width: 600px;
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             z-index: 9999;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            padding: 0;
         }
 
-        /* Title */
+        /* Header */
         .dialog-titlebar {
+            background: #111;
+            color: #ff9900;
+            padding: 10px 15px;
             font-weight: bold;
+            border-bottom: 1px solid #333;
+        }
+
+        /* Content */
+        .dialog-content {
+            padding: 20px;
+        }
+
+        /* Labels */
+        .dialog label {
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        /* Inputs */
+        .dialog input,
+        .dialog select {
+            width: 100%;
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
             margin-bottom: 10px;
+        }
+
+        /* Buttons */
+        .dialog .btn-success {
+            background: #28a745;
+            border: none;
+        }
+
+        .dialog .btn-secondary {
+            background: #6c757d;
+            border: none;
         }
 
         /* Close button */
         .dialog-close-btn {
             position: absolute;
-            top: 10px;
-            right: 15px;
+            right: 10px;
+            top: 8px;
+            color: #fff;
             cursor: pointer;
-
         }
 
-        .dialog {
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%);
-        }
-
-        .dialog {
-            animation: fadeIn 0.2s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        body {
-            padding: 20px;
-            font-family: Arial;
-            background: #f5f5f5;
-        }
-
-        table {
-            background: white;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            border: 1px solid #ccc;
+        /* Table row hover */
+        #data-table tbody tr {
+            transition: 0.2s;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
+    @yield('leftpanel')
 
-    <h2>@yield('page_title')</h2>
+    @yield('Help')
+
+    <div class="breadcrump">
+        @yield('breadcrump')
+    </div>
 
     <div>
         @yield('content')

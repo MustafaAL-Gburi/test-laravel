@@ -25,10 +25,6 @@
  @section('Help')
      @include('sidebars.Help.berufe', ['active' => 'anzeigen'])
  @endsection
- @section('breadcrump')
-     <a href="/">Verwaltung</a>
-     <a>Berufe</a>
- @endsection()
 
  @section('content')
      <div id="results">

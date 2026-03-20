@@ -561,7 +561,7 @@ function sendAjaxRequest(url) {
         //     });
         // }
         if (settings.dialogCloseButton) {
-            obj.prepend('<a class="dialog-close-btn">X</a>');
+            obj.prepend('<a class="dialog-close-btn"><i class="fa fa-times"></i></a>');
             obj.find('a.dialog-close-btn').on('click', function () {
                 _closeDialog();
             });

@@ -1,6 +1,6 @@
 @if (!empty($data))
     @if (\App\Helpers\helper::can('berufe->view'))
-        <table id="data-table" class="table table-hover table-striped" style="width: 100%">
+        <table id="data-table" class="list fixed-header max-height" style="width: 100%">
             <thead>
                 <tr>
                     <th width="50">Id</th>
