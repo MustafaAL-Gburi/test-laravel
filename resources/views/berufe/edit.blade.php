@@ -1,11 +1,22 @@
-<div class="dialog-title">Beruf bearbeiten</div>
+@php
+    $isEdit = isset($beruf->id);
+@endphp
 
-{!! Form::open('/beruf/update/' . $beruf->id, 'POST')->setAttribute('onsubmit', 'return submitDialog(this);') !!}
+<div class="dialog-title">
+    {{ $isEdit ? 'Beruf bearbeiten' : 'Neuer Beruf' }}
+</div>
 
-{!! Form::text('beruf', 'Beruf')->value($beruf->beruf) !!}
+{!! Form::open($isEdit ? '/beruf/update/' . $beruf->id : '/beruf/store', 'POST')->setAttribute(
+    'onsubmit',
+    'return submitDialog(this);',
+) !!}
+
+{!! Form::text('beruf', 'Beruf')->value($beruf->beruf ?? '') !!}
 
 <br>
 
-<button type="submit" class="btn btn-success">Speichern</button>
+<button type="submit" class="btn btn-success">
+    {{ $isEdit ? 'Speichern' : 'Erstellen' }}
+</button>
 
 {!! Form::close() !!}

@@ -56,4 +56,31 @@ class BerufController extends Controller
     'execute' => "window.ats.performSearch();"
 ]);
 }
+public function store(Request $request)
+{
+    $request->validate([
+        'beruf' => 'required'
+    ]);
+
+    Beruf::create([
+        'beruf' => $request->beruf
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'msg' => 'Erstellt!',
+        'execute' => "window.ats.performSearch();"
+    ]);
+}
+public function delete($id)
+{
+    $beruf = Beruf::findOrFail($id);
+    $beruf->delete();
+
+    return response()->json([
+        'success' => true,
+        'msg' => 'Gelöscht!',
+        'execute' => "window.ats.performSearch();"
+    ]);
+}
  }

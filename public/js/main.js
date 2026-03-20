@@ -90,7 +90,7 @@ $(document).ready(function () {
 
 function registerDefaultEvents(obj) {
     if (obj !== false && obj !== undefined) {
-        $('a.list-action', obj).each(function () {
+        $('a.list-action', obj).off('click').each(function () {
             var targetUrl = $(this).attr('href');
             if ($(this).hasClass('open-dialog')) {
                 $(this).parent().parent().css('cursor', 'pointer').dblclick(function () {
@@ -102,12 +102,12 @@ function registerDefaultEvents(obj) {
                 });
             }
         });
-        $('.open-dialog', obj).on('click', function (e) {
+        $('.open-dialog', obj).off('click').on('click', function (e) {
             e.preventDefault();
             openDialog($(this).attr('href'), {});
             e.stopPropagation();
         });
-        $('.dialog-delete', obj).on('click', function (e) {
+        $('.dialog-delete', obj).off('click').on('click', function (e) {
             e.preventDefault();
             $.dialog({
                 title: $(this).attr('title'),

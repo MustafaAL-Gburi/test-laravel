@@ -24,8 +24,9 @@
                             @endif
                             @if (\App\Helpers\helper::can('berufe->delete'))
                                 <a class="icon icon-danger dialog-delete" data-dialog="Beruf wirklich löschen?"
-                                    tabindex="-1" title="Löschen" href="/beruf/loeschen/{{ $db->id }}"><i
-                                        class="far fa-trash-alt"></i></a>
+                                    href="/beruf/loeschen/{{ $db->id }}">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
                             @endif
                         </td>
                     </tr>
