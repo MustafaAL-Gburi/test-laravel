@@ -109,11 +109,12 @@ function registerDefaultEvents(obj) {
         });
         $('.dialog-delete', obj).off('click').on('click', function (e) {
             e.preventDefault();
-            $.dialog({
-                title: $(this).attr('title'),
-                content: '<p>' + $(this).attr('data-dialog') + '</p><div class="buttonbar bordertop"><button class="btn btn-danger" type="button" onclick="closeDialog();showLoader();window.location.href = \'' + $(this).attr('href') + '\';">Ja</button><button class="btn btn-secondary fa-pull-right" type="button" onclick="closeDialog();">Nein</button></div>'
-            });
-            e.stopPropagation();
+
+            let url = $(this).attr('href');
+
+            if (!confirm($(this).attr('data-dialog'))) return;
+
+            sendAjaxRequest(url);
         });
         // Dropdowns
         $('.dropdown-toggle', obj).on('click', function (myevent) {
@@ -198,6 +199,29 @@ function registerDefaultEvents(obj) {
             });
         }
     }
+}
+
+function showToast(msg, type = 'success') {
+    let color = type === 'success' ? '#28a745' : '#dc3545';
+
+    let toast = $(`
+        <div style="
+            background: ${color};
+            color: white;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        ">
+            ${msg}
+        </div>
+    `);
+
+    $('#toast-container').append(toast);
+
+    setTimeout(() => {
+        toast.fadeOut(300, () => toast.remove());
+    }, 2500);
 }
 
 function messageAlert(msg, title) {
@@ -337,6 +361,14 @@ function closeDialog() {
     $.dialog('close');
 }
 
+function spinnerON() {
+    $('#spinner').show();
+}
+
+function spinnerOFF() {
+    $('#spinner').hide();
+}
+
 function submitDialog(form) {
     spinnerON();
     $.ajax({
@@ -357,7 +389,7 @@ function submitDialog(form) {
                         if (response['msg_title'] !== undefined) {
                             messageSuccess(response['msg'], response['msg_title']);
                         } else {
-                            messageSuccess(response['msg']);
+                            showToast(response['msg'], 'success')
                         }
                     }
                     if (response['execute'] !== undefined) {
@@ -452,21 +484,35 @@ function submitDialog(form) {
 
 function sendAjaxRequest(url) {
     $.get(url, function (response) {
+
+        // تحديث المحتوى إذا موجود
         if (response['parent_content'] !== undefined) {
             registerDefaultEvents($.dialog('content', response['parent_content']));
         }
+
         if (response['content'] !== undefined && response['content'] != '') {
             registerDefaultEvents($.dialog('content', response['content']));
         }
+
+        // 🔥 أهم جزء (Toast بدل Dialog)
         if (response['msg'] !== undefined) {
-            messageAlert(response['msg']);
+            if (response['success']) {
+                showToast(response['msg'], 'success');
+            } else {
+                showToast(response['msg'], 'error');
+            }
         }
+
+        // تنفيذ أوامر إضافية (تحديث الجدول)
         if (response['execute'] !== undefined) {
             eval(response['execute']);
         }
+
+        // redirect إذا موجود
         if (response['redirect'] !== undefined) {
             window.location.href = response['redirect'];
         }
+
     }, "json");
 }
 

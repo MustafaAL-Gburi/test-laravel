@@ -1,6 +1,6 @@
 @if (!empty($data))
     @if (\App\Helpers\helper::can('berufe->view'))
-        <table id="data-table" class="table table-bordered table-striped" style="width: 100%">
+        <table id="data-table" class="table table-hover table-striped" style="width: 100%">
             <thead>
                 <tr>
                     <th width="50">Id</th>
@@ -35,5 +35,7 @@
         </table>
     @endif
 @else
-    <p>- Keine Datensätze vorhanden -</p>
+    <div style="text-align:center; padding:20px; color:#777;">
+        📭 Keine Daten gefunden
+    </div>
 @endif

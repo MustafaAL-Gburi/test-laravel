@@ -58,6 +58,22 @@
             transform: translate(-50%, -50%);
         }
 
+        .dialog {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         body {
             padding: 20px;
             font-family: Arial;
@@ -94,6 +110,40 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div id="toast-container"
+        style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+">
+    </div>
+    <div id="spinner"
+        style="
+    display:none;
+    position: fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background: rgba(0,0,0,0.3);
+    z-index:9999;
+">
+        <div
+            style="
+        position:absolute;
+        top:50%;left:50%;
+        transform:translate(-50%,-50%);
+        color:white;
+        font-size:20px;
+    ">
+            Loading...
+        </div>
+    </div>
 
     @stack('scripts')
 
