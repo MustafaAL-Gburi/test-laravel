@@ -39,7 +39,7 @@
      <script type="application/javascript">
         var searchFields = ['volltext'];
         $(document).ready(function () {
-            var ats = $('#results').AjaxTable({
+            window.ats = $('#results').AjaxTable({
                 url: '/berufe/get_list',
                 sortable: ['id', 'beruf'],
                 defaultSort: [['beruf', 'asc']],

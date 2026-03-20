@@ -14,6 +14,50 @@
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Dialog overlay */
+        .dialog-overlay {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+        }
+
+        /* Dialog box */
+        .dialog {
+            position: fixed !important;
+            background: white;
+            min-width: 300px;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 9999;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Title */
+        .dialog-titlebar {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Close button */
+        .dialog-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+
+        }
+
+        .dialog {
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+        }
+
         body {
             padding: 20px;
             font-family: Arial;
@@ -46,6 +90,10 @@
 
     <!-- main.js -->
     <script src="/js/main.js"></script>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     @stack('scripts')
 

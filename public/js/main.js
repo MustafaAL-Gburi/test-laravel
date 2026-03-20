@@ -331,7 +331,9 @@ function openDialog(url, options) {
 }
 
 function closeDialog() {
-    $('.datepicker').datepicker('hide');
+    if ($.fn.datepicker) {
+        $('.datepicker').datepicker('hide');
+    }
     $.dialog('close');
 }
 

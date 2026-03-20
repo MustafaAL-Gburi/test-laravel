@@ -18,3 +18,5 @@ use App\Http\Controllers\BerufController;
 
 Route::get('/berufe', [BerufController::class, 'index']);
 Route::match(['get','post'], '/berufe/get_list', [BerufController::class, 'get_list']);
+Route::get('/beruf/edit/{id?}', [BerufController::class, 'edit']);
+Route::post('/beruf/update/{id}', [BerufController::class, 'update']);
