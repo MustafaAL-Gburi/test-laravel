@@ -34,28 +34,51 @@
 
  @push('scripts')
      <script type="application/javascript">
-        var searchFields = ['volltext'];
-        $(document).ready(function () {
-            window.ats = $('#results').AjaxTable({
+
+$(document).ready(function () {
+
+    // 🔥 Ajax Table
+    window.ats = $('#results').AjaxTable({
         url: '/berufe/get_list',
         method: 'GET',
 
-        // 🔥 sorting
+        // sorting
         sortable: ['id', 'beruf'],
         defaultSort: [['beruf', 'asc']],
 
-        // 🔥 pagination
+        // pagination
         paginate: '.pagination-numbers',
         info: '.pagination-info',
         perPage: 20,
         paginateLength: 5,
 
-        // 🔥 مهم جداً
+        // مهم جداً
         onUpdate: function () {
             registerDefaultEvents($('#results'));
         }
     });
-            ats.searchObserve(searchFields);
-        });
-    </script>
+
+    // 🔥 LIVE SEARCH (بدون lag)
+    let timer;
+
+    $('#volltext').on('keyup', function () {
+
+        clearTimeout(timer);
+
+        let value = $(this).val();
+
+        timer = setTimeout(function () {
+
+            // شرط حتى نقلل الضغط
+            if (value.length >= 2 || value.length === 0) {
+                window.ats.search('volltext', value);
+            }
+
+        }, 100); // سريع جداً
+
+    });
+
+});
+
+</script>
  @endpush
