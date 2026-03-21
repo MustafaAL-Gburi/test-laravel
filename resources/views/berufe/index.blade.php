@@ -4,31 +4,32 @@
 
  @section('leftpanel')
      <ul>
-         @if (\App\Helpers\helper::can('berufe->view'))
-             <li>
-                 {!! Form::text('volltext')->placeholder('Volltext Suche')->addClass('volltext') !!}
-             </li>
-             <li class="divider"></li>
-         @endif
-         @if (\App\Helpers\helper::can('berufe->new'))
-             <li>
-                 <a class="open-dialog" href="/beruf/edit"><i class="fa fa-plus"></i>Neuer Beruf</a>
-             </li>
-         @endif
-         @if (\App\Helpers\helper::can('berufe->import'))
-             <li>
-                 <a class="open-dialog" href="/berufe/import"><i class="fa fa-upload"></i>Berufe Import</a>
-             </li>
-         @endif
+         <li>
+             <div class="form-group">
+                 <input type="text" id="volltext" class="form-control" placeholder="Volltext Suche">
+             </div>
+         </li>
+
+         <li class="divider"></li>
+
+         <li>
+             <a class="open-dialog" href="/beruf/edit">
+                 <i class="fa fa-plus"></i> Neuer Beruf
+             </a>
+         </li>
      </ul>
- @endsection()
+ @endsection
  @section('Help')
      @include('sidebars.Help.berufe', ['active' => 'anzeigen'])
  @endsection
 
  @section('content')
-     <div id="results">
+
+     <div class="d-flex justify-content-between align-items-center mt-2">
+         <div class="pagination-info"></div>
+         <div class="pagination-numbers"></div>
      </div>
+     <div id="results"></div>
  @endsection
 
  @push('scripts')
@@ -36,12 +37,24 @@
         var searchFields = ['volltext'];
         $(document).ready(function () {
             window.ats = $('#results').AjaxTable({
-                url: '/berufe/get_list',
-                sortable: ['id', 'beruf'],
-                defaultSort: [['beruf', 'asc']],
-                perPage: 100,
-                onUpdate: function() { registerDefaultEvents($('#results')); }
-            });
+        url: '/berufe/get_list',
+        method: 'GET',
+
+        // 🔥 sorting
+        sortable: ['id', 'beruf'],
+        defaultSort: [['beruf', 'asc']],
+
+        // 🔥 pagination
+        paginate: '.pagination-numbers',
+        info: '.pagination-info',
+        perPage: 20,
+        paginateLength: 5,
+
+        // 🔥 مهم جداً
+        onUpdate: function () {
+            registerDefaultEvents($('#results'));
+        }
+    });
             ats.searchObserve(searchFields);
         });
     </script>

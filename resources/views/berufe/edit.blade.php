@@ -1,8 +1,9 @@
 @php
     $isEdit = isset($beruf->id);
 @endphp
+
 <div class="dialog-title">
-    {{ $isEdit ? 'Daten bearbeiten' : 'Neuer Beruf' }}
+    {{ $isEdit ? 'Daten von ' . $beruf->id . ' | ' . $beruf->beruf : 'Neuer Beruf' }}
 </div>
 
 <div class="dialog-content">
@@ -12,19 +13,42 @@
         'return submitDialog(this);',
     ) !!}
 
+    {{-- STATUS --}}
+    {!! Form::select('status', 'Status')->options([
+            1 => 'aktiv',
+            0 => 'inaktiv',
+            2 => 'alte Berufsbezeichnung',
+        ])->value($beruf->status ?? 1) !!}
+
+    {{-- BERUF --}}
     {!! Form::text('beruf', 'Beruf Name')->value($beruf->beruf ?? '') !!}
 
+    {{-- MAENNLICH --}}
     {!! Form::text('maennlich', 'Beruf Name (maskulin)')->value($beruf->maennlich ?? '') !!}
 
+    {{-- WEIBLICH --}}
     {!! Form::text('weiblich', 'Beruf Name (feminin)')->value($beruf->weiblich ?? '') !!}
 
+    {{-- KEYWORDS --}}
     {!! Form::text('keywords', 'Keywords')->value($beruf->keywords ?? '') !!}
 
-    <br>
+    {{-- BA ID --}}
+    {!! Form::text('ba_id', 'BA Id')->value($beruf->ba_id ?? '') !!}
 
-    <div style="display:flex; justify-content: space-between;">
-        <button type="button" class="btn btn-secondary" onclick="closeDialog()">Abbrechen</button>
-        <button type="submit" class="btn btn-success">Speichern</button>
+    {{-- BA ZUSTAND --}}
+    {!! Form::select('ba_zustand', 'BA Zustand')->options([
+            'E' => 'E',
+            'A' => 'A',
+        ])->value($beruf->ba_zustand ?? '') !!}
+
+    <div class="buttonbar">
+        <button type="button" class="btn btn-secondary" onclick="closeDialog()">
+            Abbrechen
+        </button>
+
+        <button type="submit" class="btn btn-success">
+            Speichern
+        </button>
     </div>
 
     {!! Form::close() !!}
