@@ -11,7 +11,7 @@ class StoreBerufRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return true; // Always allow, no auth required in this app variant
     }
 
     /**

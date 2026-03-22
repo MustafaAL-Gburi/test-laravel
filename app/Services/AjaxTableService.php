@@ -1,5 +1,6 @@
 <?php
 /**
+ * Service for handling AJAX table requests (DataTables compatible)
  * User: amank oppm
  * Date: 17.04.18
  * Time: 13:50
@@ -8,42 +9,47 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
-class AjaxTableService extends \DB
+class AjaxTableService
 {
-    protected $request;
-    protected $search = [];
+    protected Request $request;
+    protected array $search = [];
     protected $searchCallback = null;
     protected $view = false;
-    protected $params = [];
+    protected array $params = [];
 
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
-    public function registerSearch($name, $func)
+    public function registerSearch(string $name, callable $func): self
     {
         $this->search[$name] = $func;
+        return $this;
     }
 
-    public function registerSearchCallback($func)
+    public function registerSearchCallback(callable $func): self
     {
         $this->searchCallback = $func;
+        return $this;
     }
 
-    public function setError()
+    public function setError(): void
     {
-        echo "set error called";
+        // TODO: Implement proper error handling
+        \Log::error('AjaxTableService error called');
     }
 
-    public function useView($viewFile, $params = [])
+    public function useView(string $viewFile, array $params = []): self
     {
         $this->view = $viewFile;
         $this->params = $params;
+        return $this;
     }
 
-    public function response($qb,$optional='')
+    public function response(Builder $qb, string $optional = ''): array
     {
         if (isset($this->request->order) && !empty($this->request->order)) {
             foreach ($this->request->order as $order) {

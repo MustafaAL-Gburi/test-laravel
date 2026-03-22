@@ -13,13 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// berufcontroller routes  
+// berufcontroller routes
 use App\Http\Controllers\BerufController;
 
-Route::get('/berufe', [BerufController::class, 'index']);
-Route::match(['get','post'], '/berufe/get_list', [BerufController::class, 'get_list']);
-Route::get('/beruf/edit/{id?}', [BerufController::class, 'edit']);
-Route::post('/beruf/update/{id}', [BerufController::class, 'update']);
-Route::get('/beruf/edit', [BerufController::class, 'edit']);
-Route::post('/beruf/store', [BerufController::class, 'store']);
-Route::get('/beruf/loeschen/{id}', [BerufController::class, 'delete']);
+Route::get('/berufe', [BerufController::class, 'index'])->name('berufe.index');
+Route::match(['get','post'], '/berufe/get_list', [BerufController::class, 'getList'])->name('berufe.getList');
+Route::get('/beruf/edit/{id?}', [BerufController::class, 'edit'])->name('berufe.edit');
+Route::post('/beruf/update/{id}', [BerufController::class, 'update'])->name('berufe.update');
+Route::post('/beruf/store', [BerufController::class, 'store'])->name('berufe.store');
+Route::get('/beruf/loeschen/{id}', [BerufController::class, 'delete'])->name('berufe.delete');

@@ -6,21 +6,28 @@ use App\Models\Beruf;
 use App\Services\AjaxTableService;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBerufRequest;
+use App\Http\Requests\UpdateBerufRequest;
 
 class BerufController extends Controller
 {
+    /**
+     * Display the index page for berufe.
+     */
     public function index()
     {
         return view('berufe.index');
     }
 
-    public function get_list(AjaxTableService $table)
+    /**
+     * Get the list of berufe for AJAX table.
+     */
+    public function getList(AjaxTableService $table)
     {
-        $qb = Beruf::query();
+        $queryBuilder = Beruf::query();
 
-        // search
-        $table->registerSearch('volltext', function($value) {
-            $this->where(function($q) use ($value) {
+        // Search functionality
+        $table->registerSearch('volltext', function ($value) use ($queryBuilder) {
+            $queryBuilder->where(function ($q) use ($value) {
                 $q->where('beruf', 'like', "%$value%")
                   ->orWhere('maennlich', 'like', "%$value%")
                   ->orWhere('weiblich', 'like', "%$value%")
@@ -28,61 +35,76 @@ class BerufController extends Controller
             });
         });
 
-        // view
-        $table->useView('berufe.list');
+        // Set the view for the table with permissions to avoid N+1 queries
+        $table->useView('berufe.list', [
+            'can_view' => \App\Helpers\helper::can('berufe->view'),
+            'can_edit' => \App\Helpers\helper::can('berufe->edit'),
+            'can_delete' => \App\Helpers\helper::can('berufe->delete'),
+        ]);
 
-        return $table->response($qb);
-     } 
-         public function edit($id = null)
-    {
-    $beruf = $id ? Beruf::find($id) : new Beruf();
-
-    return view('berufe.edit', compact('beruf'));
+        return $table->response($queryBuilder);
     }
-        public function update(Request $request, $id)
-{
-    $request->validate([
-        'beruf' => 'required'
-    ]);
 
-    $beruf = Beruf::findOrFail($id);
+    /**
+     * Show the edit form for a beruf.
+     */
+    public function edit($id = null)
+    {
+        $beruf = $id ? Beruf::find($id) : new Beruf();
 
-    $beruf->update($request->all());
+        return view('berufe.edit', compact('beruf'));
+    }
 
-  return response()->json([
-    'success' => true,
-    'msg' => 'Gespeichert!',
-    'execute' => "window.ats.performSearch();"
-]);
+    /**
+     * Update an existing beruf.
+     */
+    public function update(UpdateBerufRequest $request, $id)
+    {
+        $beruf = Beruf::findOrFail($id);
+        $beruf->update($request->validated());
+
+        return $this->successResponse('Gespeichert!');
+    }
+
+    /**
+     * Store a new beruf.
+     */
+    public function store(StoreBerufRequest $request)
+    {
+        Beruf::create($request->only([
+            'beruf',
+            'maennlich',
+            'weiblich',
+            'keywords',
+            'ba_id',
+            'status',
+            'ba_zustand',
+            'fragebogen_id'
+        ]));
+
+        return $this->successResponse('Erstellt!');
+    }
+
+    /**
+     * Delete a beruf.
+     */
+    public function delete($id)
+    {
+        $beruf = Beruf::findOrFail($id);
+        $beruf->delete();
+
+        return $this->successResponse('Gelöscht!');
+    }
+
+    /**
+     * Return a standardized success response.
+     */
+    private function successResponse(string $message): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'msg' => $message,
+            'execute' => "window.ats.performSearch();"
+        ]);
+    }
 }
-public function store(StoreBerufRequest $request)
-{
-    $beruf = Beruf::create($request->only([
-    'beruf',
-    'maennlich',
-    'weiblich',
-    'keywords',
-    'ba_id',
-    'status',
-    'ba_zustand',
-    'fragebogen_id'
-]));
-
-    return response()->json([
-        'success' => true,
-        'msg' => 'Erstellt!',
-        'execute' => "window.ats.performSearch();"
-    ]);
-}
-public function delete($id)
-{
-    $beruf = Beruf::findOrFail($id);
-    $beruf->delete();
-
-    return response()->json([
-        'success' => true,
-        'msg' => 'Gelöscht!',
-        'execute' => "window.ats.performSearch();"
-    ]);
-}
- }
