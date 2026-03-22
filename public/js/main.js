@@ -452,7 +452,16 @@ function submitDialog(form) {
             $('.form-control.is-invalid').removeClass('is-invalid');
             $('.form-group').find('.invalid-feedback').remove();
             // Add new errors
-            var response = (data['responseJSON'] !== undefined) ? data['responseJSON'] : $.parseJSON(data.responseText);
+            console.error(data.responseText);
+
+            let msg = 'Server Error';
+
+            try {
+                let res = JSON.parse(data.responseText);
+                msg = res.msg || msg;
+            } catch (e) { }
+
+            showToast(msg, 'error');
             if (typeof response == 'object') {
                 if (response['errors'] !== undefined) {
                     $.each(response['errors'], function (index, messages) {

@@ -12,16 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('berufe', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('beruf');
-            $table->unsignedInteger('fragebogen_id')->nullable();
-            $table->string('status')->nullable();
-            $table->string('ba_beruf')->nullable();
-            $table->string('ba_beruf_kurz')->nullable();
-            $table->string('maennlich')->nullable();
-            $table->string('weiblich')->nullable();
-            $table->string('ba_zustand')->nullable();
-            $table->string('keywords')->nullable();
+            $table->increments('id')->notNull();
+            $table->string('beruf')->notNull();
+            $table->tinyInteger('status')->notNull();
+            $table->unsignedInteger('ba_id')->nullable();
+            $table->varchar('maennlich', 100)->nullable();
+            $table->varchar('weiblich', 100)->nullable();
+            $table->char('ba_zustand', 1)->nullable();
+            $table->varchar('keywords', 250)->nullable();
             $table->timestamps();
         });
     }

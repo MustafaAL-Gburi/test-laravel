@@ -46,9 +46,7 @@ class BerufController extends Controller
 
     $beruf = Beruf::findOrFail($id);
 
-    $beruf->update([
-        'beruf' => $request->beruf
-    ]);
+    $beruf->update($request->all());
 
   return response()->json([
     'success' => true,
@@ -57,21 +55,30 @@ class BerufController extends Controller
 ]);
 }
 public function store(Request $request)
-{
+ {
+    
     $request->validate([
         'beruf' => 'required'
     ]);
-
-    Beruf::create([
-        'beruf' => $request->beruf
-    ]);
+    Beruf::create($request->all());
+  
 
     return response()->json([
         'success' => true,
         'msg' => 'Erstellt!',
         'execute' => "window.ats.performSearch();"
     ]);
-}
+ }
+// public function store(StoreBerufRequest $request)
+// {
+//     $beruf = Beruf::create($request->validated());
+
+//     return response()->json([
+//         'success' => true,
+//         'msg' => 'Erstellt!',
+//         'execute' => "window.ats.performSearch();"
+//     ]);
+// }
 public function delete($id)
 {
     $beruf = Beruf::findOrFail($id);
