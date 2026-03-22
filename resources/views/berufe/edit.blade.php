@@ -41,11 +41,14 @@
             'A' => 'A',
         ])->value($beruf->ba_zustand ?? '') !!}
 
+    {{-- Cancel button --}}
     <div class="buttonbar">
         <button type="button" class="btn btn-secondary" onclick="closeDialog()">
             Abbrechen
         </button>
 
+
+        {{-- Save button --}}
         <button type="submit" class="btn btn-success">
             Speichern
         </button>

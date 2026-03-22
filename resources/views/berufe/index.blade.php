@@ -35,50 +35,48 @@
  @push('scripts')
      <script type="application/javascript">
 
-$(document).ready(function () {
+        // Main document ready handler
+        $(document).ready(function () {
 
-    // 🔥 Ajax Table
-    window.ats = $('#results').AjaxTable({
-        url: '/berufe/get_list',
-        method: 'GET',
+            // AjaxTable initialization: retrieve data for the list view
+            // and render in #results container
+            window.ats = $('#results').AjaxTable({
+                url: '/berufe/get_list',
+                method: 'GET',
 
-        // sorting
-        sortable: ['id', 'beruf'],
-        defaultSort: [['beruf', 'asc']],
+                // Enabled columns for sorting
+                sortable: ['id', 'beruf'],
+                defaultSort: [['beruf', 'asc']],
 
-        // pagination
-        paginate: '.pagination-numbers',
-        info: '.pagination-info',
-        perPage: 20,
-        paginateLength: 5,
+                // Pagination settings
+                paginate: '.pagination-numbers',
+                info: '.pagination-info',
+                perPage: 20,
+                paginateLength: 5,
 
-        // مهم جداً
-        onUpdate: function () {
-            registerDefaultEvents($('#results'));
-        }
-    });
+                // Update event: bind row actions after each table refresh
+                onUpdate: function () {
+                    registerDefaultEvents($('#results'));
+                }
+            });
 
-    // 🔥 LIVE SEARCH (بدون lag)
-    let timer;
+            // Live text search with debounce
+            let timer;
 
-    $('#volltext').on('keyup', function () {
+            $('#volltext').on('keyup', function () {
+                clearTimeout(timer);
 
-        clearTimeout(timer);
+                let value = $(this).val();
 
-        let value = $(this).val();
+                timer = setTimeout(function () {
+                    // only search if enough characters to reduce server load
+                    if (value.length >= 2 || value.length === 0) {
+                        window.ats.search('volltext', value);
+                    }
+                }, 100);
+            });
 
-        timer = setTimeout(function () {
+        });
 
-            // شرط حتى نقلل الضغط
-            if (value.length >= 2 || value.length === 0) {
-                window.ats.search('volltext', value);
-            }
-
-        }, 100); // سريع جداً
-
-    });
-
-});
-
-</script>
+    </script>
  @endpush
