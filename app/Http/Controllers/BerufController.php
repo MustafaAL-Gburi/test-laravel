@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Beruf;
 use App\Services\AjaxTableService;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreBerufRequest;
 
 class BerufController extends Controller
 {
@@ -54,31 +55,25 @@ class BerufController extends Controller
     'execute' => "window.ats.performSearch();"
 ]);
 }
-public function store(Request $request)
- {
-    
-    $request->validate([
-        'beruf' => 'required'
-    ]);
-    Beruf::create($request->all());
-  
+public function store(StoreBerufRequest $request)
+{
+    $beruf = Beruf::create($request->only([
+    'beruf',
+    'maennlich',
+    'weiblich',
+    'keywords',
+    'ba_id',
+    'status',
+    'ba_zustand',
+    'fragebogen_id'
+]));
 
     return response()->json([
         'success' => true,
         'msg' => 'Erstellt!',
         'execute' => "window.ats.performSearch();"
     ]);
- }
-// public function store(StoreBerufRequest $request)
-// {
-//     $beruf = Beruf::create($request->validated());
-
-//     return response()->json([
-//         'success' => true,
-//         'msg' => 'Erstellt!',
-//         'execute' => "window.ats.performSearch();"
-//     ]);
-// }
+}
 public function delete($id)
 {
     $beruf = Beruf::findOrFail($id);

@@ -11,12 +11,13 @@ class Beruf extends Model
     public $timestamps = false;
 
     protected $fillable = [
-    'status',
-    'beruf',
+   'beruf',
     'maennlich',
     'weiblich',
     'keywords',
     'ba_id',
-    'ba_zustand'
+    'status',
+    'ba_zustand',
+    'fragebogen_id'
 ];
 }
