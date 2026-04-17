@@ -465,7 +465,7 @@ function submitDialog(form) {
             if (typeof response == 'object') {
                 if (response['errors'] !== undefined) {
                     $.each(response['errors'], function (index, messages) {
-                        // console.log(index);
+
                         if ($('#' + index + ' .select2').length) {
                             $.each(messages, function (mid, msg) {
                                 console.log($('div #' + index).children($('div .col-md-8')));
@@ -484,7 +484,12 @@ function submitDialog(form) {
                 }
             } else {
                 // messageAlert(msg);
-                messageAlert('Form could not be submitted correctly');
+                let res = JSON.parse(data.responseText);
+                msg = res.errors
+                    ? '<ol><li>' + Object.values(res.errors).flat().join('</li><li>') + '</li></ol>'
+                    : msg || 'An error occurred';
+                console.log(res);
+                messageAlert(msg);
             }
         }
     });

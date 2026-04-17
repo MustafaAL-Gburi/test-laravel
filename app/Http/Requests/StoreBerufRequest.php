@@ -22,13 +22,13 @@ class StoreBerufRequest extends FormRequest
  public function rules(): array
 {
     return [
-        'beruf' => 'required|string|max:255',
+        'beruf' => 'required|string|min:2|max:50|unique:berufe,beruf',
         'status' => 'nullable|integer|min:0|max:255',
         'ba_id' => 'nullable|integer|min:0',
         'maennlich' => 'nullable|string|max:100',
         'weiblich' => 'nullable|string|max:100',
         'ba_zustand' => 'nullable|string|size:1',
-        'keywords' => 'nullable|string|max:250',
+        'keywords' => 'required|string|max:250',
         'fragebogen_id' => 'nullable|integer'
     ];
 }
