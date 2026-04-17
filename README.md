@@ -3,6 +3,7 @@
 A simple Laravel-based application for managing professions (Berufe).
 The system allows users to create, edit, delete, and search professions using an AJAX-powered table.
 
+<<<<<<< HEAD
 ## 🚀 Features
 
 - ✅ Create new professions
@@ -86,6 +87,92 @@ Open your browser and navigate to: `http://127.0.0.1:8000/berufe`
 - **Edit:** Click edit icon to modify existing profession
 - **Delete:** Click delete icon with confirmation dialog
 
+=======
+
+## 🚀 Features
+
+- ✅ Create new professions
+- ✅ Edit existing professions
+- ✅ Delete professions with confirmation
+- ✅ Live search with debounced input
+- ✅ AJAX table with pagination and sorting
+- ✅ Toast notifications
+- ✅ Clean UI with dark theme
+- ✅ No authentication required (open access)
+
+## 🛠️ Technologies Used
+
+- **Backend:** Laravel 10.x
+- **Database:** MySQL
+- **Frontend:** jQuery, Bootstrap 5
+- **AJAX:** Custom AjaxTable plugin
+- **Styling:** Bootstrap 5 with custom CSS
+
+## 📦 Installation
+
+### Prerequisites
+- PHP 8.1 or higher
+- Composer
+- MySQL
+- Node.js & NPM (for assets)
+
+### Setup Steps
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MustafaAL-Gburi/test-laravel
+   cd test-laravel
+   ```
+
+2. **Install PHP dependencies:**
+   ```bash
+   composer install
+   ```
+
+3. **Install Node dependencies:**
+   ```bash
+   npm install
+   ```
+
+4. **Environment setup:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Database configuration:**
+   - Update `.env` file with your database credentials
+   - Create database in MySQL
+
+6. **Run migrations:**
+   ```bash
+   php artisan migrate
+   ```
+
+7. **Build assets (optional):**
+   ```bash
+   npm run build
+   ```
+
+8. **Start the development server:**
+   ```bash
+   php artisan serve
+   ```
+
+## 📖 Usage
+
+### Accessing the Application
+Open your browser and navigate to: `http://127.0.0.1:8000/berufe`
+
+### Available Operations
+
+- **View Professions:** Browse all professions in a paginated table
+- **Search:** Use the search bar for real-time filtering (debounced)
+- **Add New:** Click "Neuer Beruf" button to create new profession
+- **Edit:** Click edit icon to modify existing profession
+- **Delete:** Click delete icon with confirmation dialog
+
+>>>>>>> 1e8f40890f725334ea4c327b2f5a62a614e6cdf1
 ### Form Fields
 
 - **Beruf Name:** Main profession name (required)
@@ -166,4 +253,8 @@ The application uses strict validation:
 
 ---
 
+<<<<<<< HEAD
 *Built with Laravel 10 - Clean Code Edition*
+=======
+*Built with Laravel 10 - Clean Code Edition*
+>>>>>>> 1e8f40890f725334ea4c327b2f5a62a614e6cdf1
